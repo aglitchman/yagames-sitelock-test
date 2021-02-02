@@ -1,0 +1,17 @@
+local sitelock = require("yagames.sitelock")
+
+function init(self)
+    msg.post("#sitelock_err", "disable")
+    msg.post("#sitelock_ok", "disable")
+    msg.post("#non_html5", "disable")
+    
+    if html5 and sitelock.is_release_build() then
+        if not sitelock.verify_domain() then
+            msg.post("#sitelock_err", "enable")
+        else
+            msg.post("#sitelock_ok", "enable")
+        end
+    else
+        msg.post("#non_html5", "enable")
+    end
+end
